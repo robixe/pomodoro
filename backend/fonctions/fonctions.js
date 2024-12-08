@@ -23,11 +23,11 @@ async function logs(user,action,ip){
 }
 
 function NewToken(payload) {
-    const secretKey = process.env.JWT_SECRET || 'yourSecretKeyHere';
+    const secretKey = process.env.JWT_SECRET || 'sd161r621ffc125216521cyy1r265chv817268fusu81512097w29692wuyt17';
     if (!secretKey) {
         throw new Error('JWT secret key is missing');
     }
-    return jwt.sign(payload, secretKey, { expiresIn: '1h' });  // Example expiration time
+    return jwt.sign(payload, secretKey, { expiresIn: '1h' });
 }
 
 module.exports = { NewToken };
@@ -82,9 +82,10 @@ async function report(status, path, description) {
 			'Content-Type': 'application/json',
 			'Authorization': `Bearer ${process.env.SAFE}`
 		},
-		body: JSON.stringify({ safe: message })  // Change this line
+		body: JSON.stringify({ safe: message })
 	});
-}async function report(status, path, description) {
+}
+async function report(status, path, description) {
 	description = typeof description === 'object' ? JSON.stringify(description) : description;
 	const message = encrypt(JSON.stringify({ "server": process.env.SERVER, status, path, description }));
 	return await fetch(process.env.ANTER_API_URL, {
@@ -93,7 +94,7 @@ async function report(status, path, description) {
 			'Content-Type': 'application/json',
 			'Authorization': `Bearer ${process.env.SAFE}`
 		},
-		body: JSON.stringify({ safe: message })  // Change this line
+		body: JSON.stringify({ safe: message })
 	});
 }
 

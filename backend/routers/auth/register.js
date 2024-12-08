@@ -14,7 +14,7 @@ router.post("/register", async (req, res) => {
         const [existingUser] = await SQL("SELECT * FROM users WHERE email = ?", [email]);
         if (existingUser)
             return res.status(400).json({ message: "Email already exists" });
-        const hash = await bcrypt.hash(pass, 10);
+        const hash = await bcrypt.hash(pass, 8);
         const result = await SQL("INSERT INTO users (FullName, Email, pass) VALUES (?, ?, ?)", [fullName, email, hash]);
         if (result.affectedRows === 0) {
             return res.status(500).json({ message: "Failed to create user" });

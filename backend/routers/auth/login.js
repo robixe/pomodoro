@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { NewToken, SQL } = require("../../fonctions/fonctions");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
+const authMiddleware = require("../../middlewares/authMiddleware"); // Import the middleware
 
+// Login Route
 router.post("/login", async (req, res) => {
     try {
         const { email, pass } = req.body;
@@ -23,13 +25,11 @@ router.post("/login", async (req, res) => {
         }
         const token = NewToken({ id: userinfo.id, email, role: userinfo.role });
         return res.status(200).json({
-            token: token,
-            role: userinfo.role
+            token: token
         });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });
     }
 });
-
 module.exports = router;
